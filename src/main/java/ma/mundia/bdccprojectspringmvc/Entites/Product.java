@@ -15,7 +15,6 @@ public class Product {
     @NotEmpty
     @Size(min=3,max=50)
     private String name;
-    @NotEmpty
     @Min(0)
     private double price;
     @Min(1)

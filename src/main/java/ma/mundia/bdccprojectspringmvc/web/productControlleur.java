@@ -19,25 +19,25 @@ public class productControlleur {
     private ProductRepository productRepository;
     @GetMapping("")
     public String home(){
-        return "redirect:/index";
+        return "redirect:/user/index";
     }
-    @GetMapping("/index")
+    @GetMapping("/user/index")
     public String index(Model model){
         List<Product> produit= productRepository.findAll();
         model.addAttribute("produitList",produit);
         return "product";
     }
-    @GetMapping("/delete")
+    @GetMapping("/admin/delete")
     public String delete(@RequestParam(name="id") Long id){
      productRepository.deleteById(id);
-     return "redirect:/index";
+     return "redirect:/user/index";
     }
-    @GetMapping("/createproduit")
+    @GetMapping("/admin/createproduit")
     public String CreateProduit(Model model){
         model.addAttribute("product", new Product());
         return "Createproduit";
     }
-    @PostMapping("/saveproduit")
+    @PostMapping("/admin/saveproduit")
     public String saveproduit(@Valid Product product, BindingResult result,Model model){
        if(result.hasErrors()){
            System.out.println(result.getAllErrors());
@@ -47,6 +47,6 @@ public class productControlleur {
            return "Createproduit";
        }
        productRepository.save(product);
-       return "redirect:/index";
+       return "redirect:/user/index";
     }
 }

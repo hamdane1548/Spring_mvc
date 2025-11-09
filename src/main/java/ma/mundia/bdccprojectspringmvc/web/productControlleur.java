@@ -32,6 +32,10 @@ public class productControlleur {
      productRepository.deleteById(id);
      return "redirect:/user/index";
     }
+    @GetMapping("/access_denied")
+    public String accessDenied(){
+        return "accessdenied";
+    }
     @GetMapping("/admin/createproduit")
     public String CreateProduit(Model model){
         model.addAttribute("product", new Product());

@@ -2,6 +2,8 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+
         layout:decorate="~{Layout1}">
 >
 <head>
@@ -21,7 +23,7 @@
                       <td th:text="${p.name}"></td>
                       <td th:text="${p.price}"></td>
                       <td th:text="${p.quantity}"></td>
-                      <td>
+                      <td sec:authorize="hasRole('ADMIN')">
                       <a
                               onclick="return confirm('Etez vous sure?')"
                               class="btn btn-danger" th:href="@{/admin/delete(id=${p.id})}">Delete</a>

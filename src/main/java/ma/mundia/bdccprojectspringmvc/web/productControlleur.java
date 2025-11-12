@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +28,7 @@ public class productControlleur {
         model.addAttribute("produitList",produit);
         return "product";
     }
-    @GetMapping("/admin/delete")
+    @PostMapping("/admin/delete")
     public String delete(@RequestParam(name="id") Long id){
      productRepository.deleteById(id);
      return "redirect:/user/index";
@@ -40,6 +41,10 @@ public class productControlleur {
     public String CreateProduit(Model model){
         model.addAttribute("product", new Product());
         return "Createproduit";
+    }
+    @GetMapping("/login")
+    public String login_page(){
+        return "login";
     }
     @PostMapping("/admin/saveproduit")
     public String saveproduit(@Valid Product product, BindingResult result,Model model){

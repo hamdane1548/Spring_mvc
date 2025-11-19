@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import ma.mundia.bdccprojectspringmvc.Entites.Product;
 import ma.mundia.bdccprojectspringmvc.respostory.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,13 +23,16 @@ public class productControlleur {
     public String home(){
         return "redirect:/user/index";
     }
+
     @GetMapping("/user/index")
+    @PreAuthorize("hasRole('USER')")
     public String index(Model model){
         List<Product> produit= productRepository.findAll();
         model.addAttribute("produitList",produit);
         return "product";
     }
     @PostMapping("/admin/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@RequestParam(name="id") Long id){
      productRepository.deleteById(id);
      return "redirect:/user/index";
@@ -38,6 +42,7 @@ public class productControlleur {
         return "accessdenied";
     }
     @GetMapping("/admin/createproduit")
+    @PreAuthorize("hasRole('ADMIN')")
     public String CreateProduit(Model model){
         model.addAttribute("product", new Product());
         return "Createproduit";
@@ -47,6 +52,7 @@ public class productControlleur {
         return "login";
     }
     @PostMapping("/admin/saveproduit")
+    @PreAuthorize("hasRole('ADMIN')")
     public String saveproduit(@Valid Product product, BindingResult result,Model model){
        if(result.hasErrors()){
            System.out.println(result.getAllErrors());
